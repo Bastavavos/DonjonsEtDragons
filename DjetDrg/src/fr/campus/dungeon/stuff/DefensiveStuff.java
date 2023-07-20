@@ -4,8 +4,16 @@ public class DefensiveStuff {
     String name;
     int defLevel;
 
-    public DefensiveStuff(String name, int defLevel) {
-        this.name = name;
-        this.defLevel = defLevel;
+   public void setName(String name) {
+       this.name = name;
+   }
+
+   public void setDefLevel(int defLevel) {
+       this.defLevel = defLevel;
+   }
+
+    @Override
+    public String toString() {
+        return  name + ", defLevel = " + defLevel + '}';
     }
 }

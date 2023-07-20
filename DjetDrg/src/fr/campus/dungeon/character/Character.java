@@ -13,30 +13,15 @@ public class Character {
 
     @Override
     public String toString() {
-        return "Character{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", atkPoints=" + atkPoints +
-                ", hpPoints=" + hpPoints +
-                '}';
+        return  "name = " + name +
+                ", stats {atk = " + atkPoints +
+                ", hp = " + hpPoints + "}" +
+                ", weapon = {" + basicOffItem + '\'' +
+                ", defense = {" + basicDefItem + '\'';
     }
 
-    public Character(String name, String type) {
+    public Character(String name) {
         this.name = name;
-        this.type = type;
-
-        if (type.equals("warrior")) {
-            this.atkPoints = 10;
-            this.hpPoints = 10;
-            this.basicDefItem = new DefensiveStuff("Shield", 4);
-            this.basicOffItem = new OffensiveStuff("Weapon", 6);
-
-        } else if (type.equals("wizard")) {
-            this.atkPoints = 15;
-            this.hpPoints = 6;
-            this.basicDefItem = new DefensiveStuff("Potion", 6);
-            this.basicOffItem = new OffensiveStuff("Spell", 4);
-        }
     }
 
     public String getName() {

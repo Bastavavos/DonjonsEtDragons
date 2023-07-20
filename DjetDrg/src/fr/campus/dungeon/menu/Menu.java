@@ -1,6 +1,8 @@
 package fr.campus.dungeon.menu;
 
 import fr.campus.dungeon.character.Character;
+import fr.campus.dungeon.character.type.Warrior;
+import fr.campus.dungeon.character.type.Wizard;
 import fr.campus.dungeon.ingame.Game;
 
 import java.util.Scanner;
@@ -8,7 +10,6 @@ import java.util.Scanner;
 public class Menu {
     Character mainCharacter;
     Game mainGame;
-    String type = "";
     String name = "";
     public Menu(){
         System.out.println("Welcome on Dungeon & Dragon");
@@ -29,29 +30,29 @@ public class Menu {
 
             if (userChoice == 1) {
 
-                this.mainCharacter = createCharacter();
-                System.out.println(this.mainCharacter);
+                createCharacter();
+                System.out.println(mainCharacter.toString());
 
-            } else if (userChoice == 2 && !type.isEmpty() && !name.isEmpty()) {
+            } else if (userChoice == 2 && !name.isEmpty()) {
 
                 System.out.println("Display character information or modify my information ? [D/M]");
                 Scanner modification = new Scanner(System.in);
                 String userChoice2 = modification.nextLine();
                 System.out.println("Choice : " + userChoice2);
-                if (userChoice2.equals("D")) {
-                    System.out.println(this.mainCharacter);
+                if (userChoice2.equalsIgnoreCase("D")) {
+                    System.out.println(mainCharacter);
 
-                } else if (userChoice2.equals("M")) {
-                    type = "";
+                } else if (userChoice2.equalsIgnoreCase("M")) {
                     name = "";
-                    this.mainCharacter = createCharacter();
-                    System.out.println(this.mainCharacter);
+                    createCharacter();
+                    System.out.println(mainCharacter);
                 }
 
-            } else if (userChoice == 3 && !type.isEmpty() && !name.isEmpty()) {
+            } else if (userChoice == 3 && !name.isEmpty()) {
 
                 this.mainGame = new Game();
-                this.mainGame.displayGame();
+                this.mainGame.generateList();
+                this.mainGame.playRound();
 
                 while (true) {
 
@@ -59,10 +60,11 @@ public class Menu {
                     Scanner endgame = new Scanner(System.in);
                     String userChoice3 = endgame.nextLine();
 
-                    if (userChoice3.equals("R")) {
-                        this.mainGame.displayGame();
+                    if (userChoice3.equalsIgnoreCase("R")) {
+                        this.mainGame.generateList();
+                        this.mainGame.playRound();
 
-                    } else if (userChoice3.equals("Q")) {
+                    } else if (userChoice3.equalsIgnoreCase("Q")) {
                         break;
                     }
                 }
@@ -73,7 +75,7 @@ public class Menu {
                 Scanner forQuit = new Scanner(System.in);
                 String userChoiceQuit = forQuit.nextLine();
                 System.out.println("Choice : " + userChoiceQuit);
-                if (userChoiceQuit.equals("Y")) {
+                if (userChoiceQuit.equalsIgnoreCase("Y")) {
                     break;
                 }
             } else {
@@ -82,21 +84,22 @@ public class Menu {
         }
     }
 
-    public Character createCharacter() {
+    public void createCharacter() {
 
         Scanner myObj = new Scanner(System.in);
-
-        while (type.isEmpty() || (!type.equals("warrior") && !type.equals("wizard")) ) {
-
-            System.out.println("Select your type : warrior or wizard");
-            type = myObj.nextLine();
-        }
-
         System.out.println("Enter your name : ");
+
         name = myObj.nextLine();
 
-        Character newCharacter = new Character(name, type);
-        return newCharacter;
+        System.out.println("Select your type : warrior or wizard");
+        String type = myObj.nextLine();
+
+        if (type.equalsIgnoreCase("warrior")){
+            this.mainCharacter = new Warrior(name);
+        }
+        if (type.equalsIgnoreCase("wizard")){
+            this.mainCharacter = new Wizard(name);
+        }
     }
 }
 
