@@ -3,11 +3,14 @@ package fr.campus.dungeon.menu;
 import fr.campus.dungeon.character.Character;
 import fr.campus.dungeon.character.type.Warrior;
 import fr.campus.dungeon.character.type.Wizard;
+import fr.campus.dungeon.database.Hero;
 import fr.campus.dungeon.ingame.Game;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
+    Hero dbHero;
     Character mainCharacter;
     Game mainGame;
     String name = "";
@@ -15,7 +18,7 @@ public class Menu {
         System.out.println("Welcome on Dungeon & Dragon");
     }
 
-    public void displayMainMenu() {
+    public void displayMainMenu() throws SQLException {
 
         while (true) {
 
@@ -84,7 +87,7 @@ public class Menu {
         }
     }
 
-    public void createCharacter() {
+    public void createCharacter() throws SQLException {
 
         Scanner myObj = new Scanner(System.in);
         System.out.println("Enter your name : ");
@@ -100,6 +103,13 @@ public class Menu {
         if (type.equalsIgnoreCase("wizard")){
             this.mainCharacter = new Wizard(name);
         }
+
+        this.dbHero = new Hero();
+        dbHero.createHero(mainCharacter);
+        dbHero.getHeroes();
+        //dbHero.deleteHero(); // ajouter un choix pour supprimer perso
+
+        dbHero.editHero(mainCharacter, name); // ajouter choix dans modify perso
     }
 }
 
